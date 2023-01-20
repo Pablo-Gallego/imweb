@@ -31,12 +31,13 @@
 <?php
 if (isset($_POST["Guardar"])) 
 {
-    $nombre = $_POST["nombre"];
-    $apellidos = $_POST["apellidos"];
-    $direccion = $_POST["direccion"];
-    $telefono = $_POST["telefono"];
-    $edad = $_POST["edad"];
+    $ID = $_POST["ID"];
+    $Ciudad = $_POST["Ciudad"];
     $altura = $_POST["altura"];
+    $Habitantes = $_POST["Habitantes"];
+    $superficie = $_POST["superficie"];
+    $Selecionar = $_POST["Selecionar"];
+   
     $datos = array("nombre" => $nombre, "apellidos" => $apellidos, "direccion" => $direccion,
     "telefono" => $telefono, "edad" => $edad, "altura" => $altura);
     
@@ -51,9 +52,7 @@ if (isset($_POST["Guardar"]))
     {
         die ("No se puede usar: ". mysqli_error($Conexion)); 
     }
-
-    $insertar = mysqli_query($Conexion, "INSERT INTO agenda VALUES ('$nombre', '$apellidos', '$direccion', '$telefono', '$edad', '$altura')");
-    
+    $insertar = mysqli_query($Conexion, "INSERT INTO ciudades VALUES ('$nombre', '$apellidos', '$direccion', '$telefono', '$edad', '$altura')");
     mysqli_close($Conexion);
 } else 
 {
