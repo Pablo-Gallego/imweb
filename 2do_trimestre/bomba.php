@@ -28,35 +28,53 @@ $row = mysqli_data_seek($result,0);
 $row = mysqli_fetch_array($result);
 
 echo "<br><h1>Tabla</h1><br>";
-echo "<form method='POST' action cui.php> <table border='1px' align='center'>
-        <tr>
-        <th>ID</th>
-        <th>Ciudad</th>
-        <th>País</th>
-        <th>Habitantes</th>
-        <th>superficie</th>
-        <th>Metro</th>
-        <th>Selecionar</th>
-        </tr>
-        <tr>"; 
-            for ($x = 0; $x < mysqli_num_rows($result); $x++)
-            {echo "<tr>";
-            for ($i = 0; $i < 6; $i++) // 6 son el número de columnas que hay
-            {echo "<td>$row[$i]</td>";}
-            echo "<td><input type='radio' name='borrar' value='$ID'
-            </td>
-            </tr>";
-            $row = mysqli_fetch_array($result);
-            } 
-        echo "    
-        </tr>
-    </table>
-    <input type='submit' name='Borrar' value='Borrar'>
+echo "<form method='POST' action='bomba.php'> <table border=1>";
+echo "<tr style=\"background-color: beige;\">";
+echo "<th>ID</th>",
+    "<th>Ciudad</th>",
+    "<th>País</th>",
+    "<th>Habitantes</th>",
+    "<th>Superficie</th>",
+    "<th>¿Tiene Metro?</th>";
+    "<th>Seleccionar</th>";
+echo "</tr>";
+mysqli_data_seek($result, 0);
+$row = mysqli_fetch_array($result);
+while ($row != false) {
+    echo "<tr>";
+    echo "<td>";
+    echo $row ["id"];
+    echo "</td>";
+    echo "<td>";
+    echo $row ["ciudad"];
+    echo "</td>";
+    echo "<td>";
+    echo $row ["pais"];
+    echo "</td>";
+    echo "<td>";
+    echo $row ["habitantes"];
+    echo"</td>";
+    echo "<td>";
+    echo $row ["superficie"];
+    echo "</td>";
+    echo "<td>";
+    if ($row ["tieneMetro"]==1 ) {
+        echo "Sí";
+    } else {
+        echo "No";
+    }
+    echo "</td>";
+    echo "<td>";
+    echo "<input type=\"radio\" name=\"seleccion\" value=" . $row ["id"] . ">";
+    echo "</td>";
+    echo "</tr>";
+    $row = mysqli_fetch_array($result);
+}
+echo "</table>";
+echo "<input type='submit' name='Borrar' value='Borrar'>
     </form>";
+    
 mysqli_free_result($result);
-?>
-
-<?php
 if (isset($_POST["Borrar"])) 
 {
     $ID = $_POST["ID"];
@@ -65,7 +83,7 @@ if (isset($_POST["Borrar"]))
     $Habitantes = $_POST["Habitantes"];
     $superficie = $_POST["superficie"];
     $Selecionar = $_POST["Selecionar"];
-    $j = $_POST["ID"];
+    $seleccion = $_POST["seleccion"];
 
     $idConexion = mysqli_connect( "localhost", "root" , "" );
     if (!$idConexion) {
@@ -77,7 +95,7 @@ if (isset($_POST["Borrar"]))
      die ("No se puede usar la base de datos: ". mysqli_error($idConexion)); 
     }
     
-    $result = mysqli_query( $idConexion, "DELETE FROM ciudades WHERE '$j' = '$ID'");
+    $result = mysqli_query( $idConexion, "DELETE FROM ciudades WHERE '$seleccion' = ID");
     if (!$result) {
         die ("No se puede realizar la consulta ". mysqli_error($idConexion)); 
     }
