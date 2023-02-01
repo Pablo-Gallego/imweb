@@ -7,7 +7,7 @@
 <?php
 error_reporting(0)
 ?>
-   <h1>Registro</h1>
+   <h1 style="text-decoration: underline;">Registro</h1>
    <form method='POST' action='registro.php'>
        Email: <input type='text' name='email'> <br><br>
        Contraseña: <input type='password' name='contrasenia'> <br><br>

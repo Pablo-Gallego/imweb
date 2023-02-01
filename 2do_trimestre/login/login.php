@@ -7,7 +7,7 @@
 <?php
 error_reporting(0)
 ?>
-   <h1>Login</h1>
+   <h1 style="text-decoration: underline;">Login</h1>
    <form method='POST' action='login.php'>
        Email: <input type='text' name='email'> <br><br>
        Contraseña: <input type='password' name='contrasenia'> <br><br>
