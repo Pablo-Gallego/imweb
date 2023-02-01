@@ -20,7 +20,7 @@ if (isset($_POST["Consultar"]))
 {
     $email = $_POST["email"];
     $contrasenia = $_POST["contrasenia"];
-    $datos = array("email" => $email, "contrasenia" => $contrasenia);
+    $datos = array("email" => $email, "contrasenia" => $contrasenia); // Esto lo pongo por si alguien se copia que se sepa
 
     $idConexion = mysqli_connect( "localhost", "root" , "" );
     if (!$idConexion) 
