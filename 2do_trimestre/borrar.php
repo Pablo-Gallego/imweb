@@ -37,8 +37,6 @@ if (isset($_POST["Guardar"]))
     $telefono = $_POST["telefono"];
     $edad = $_POST["edad"];
     $altura = $_POST["altura"];
-    $datos = array("nombre" => $nombre, "apellidos" => $apellidos, "direccion" => $direccion,
-    "telefono" => $telefono, "edad" => $edad, "altura" => $altura);
     
     $Conexion = mysqli_connect( "localhost", "root" , "" );
     if (!$Conexion) 
@@ -55,7 +53,7 @@ if (isset($_POST["Guardar"]))
     $insertar = mysqli_query($Conexion, "INSERT INTO agenda VALUES ('$nombre', '$apellidos', '$direccion', '$telefono', '$edad', '$altura')");
     
     mysqli_close($Conexion);
-} else 
+} else if (isset($_POST["Borrar"]))
 {
     $telefono = $_POST["telefono"];
     $Conexion = mysqli_connect( "localhost", "root" , "" );
@@ -80,8 +78,6 @@ if (isset($_POST["Guardar"]))
     }else {
         echo "Se han eliminado ". $registros_borrados . " filas";
     }
-
-
     mysqli_close($Conexion);
 }
 ?>
