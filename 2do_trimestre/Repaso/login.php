@@ -7,31 +7,40 @@
 <?php
 error_reporting(0)
 ?>
-   <h1 style="text-decoration: underline;">Login</h1>
-   <form method='POST' action='login.php'>
+   <h1 style="text-decoration: underline;">filtrar</h1>
+   <form method='POST' action='filtrar.php'>
        nombre: <input type='text' name='nombre'> <br><br>
        <input type='submit' name='Consultar' value='Consultar'>
        </form>
        <br>
 
 <?php
-if (isset($_POST["Consultar"])) 
-{
-    $nombre = $_POST["nombre"];
-
-    $idConexion = mysqli_connect( "localhost", "root" , "" );
+// funcion
+    function filtrardb($usuario, $basedatos){
+    $idConexion = mysqli_connect( "localhost", $usuario , "" );
     if (!$idConexion) 
     {
          die('No se puede conectar' );
     }
 
-    $seleccionada = mysqli_select_db($idConexion,"login");
+    $seleccionada = mysqli_select_db($idConexion,$basedatos);
     if (!$seleccionada) 
     {
         die ("No se puede usar la base de datos: ". mysqli_error($idConexion)); 
     }
+}
+
+// Lamar a la función
+filtrardb("root","login");
+
+
+if (isset($_POST["Consultar"])) 
+{
+    $nombre = $_POST["nombre"];
+
     
-    $consulta = "SELECT nombre, apellido1, apellido2, fechanacimiento, email FROM usuarios WHERE nombre LIKE %$nombre%";
+    
+    $consulta = "SELECT nombre, apellido1, apellido2, fechanacimiento, email FROM usuarios WHERE nombre LIKE '$nombre%";
     $resultado = mysqli_query($idConexion, $consulta);
 
     if (mysqli_num_rows($resultado) > 0) 
@@ -47,7 +56,7 @@ if (isset($_POST["Consultar"]))
     </table>";
     } else 
     {
-        echo "<br><br>No estás registrado o la contraseña es incorrecta.";
+        echo "<br><br>No se han encontrado resultados.";
     }
     mysqli_close($idConexion);
 } else 
