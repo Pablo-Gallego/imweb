@@ -3,11 +3,11 @@
 <head>
     <title>Consulta</title>
 </head>
-<body align="center">
 <?php
 error_reporting(0)
 ?>
-   <h1 style="text-decoration: underline;">filtrar</h1>
+<body align="center">
+   <h1 style="text-decoration: underline;">Filtrar</h1>
    <form method='POST' action='filtrar.php'>
        nombre: <input type='text' name='nombre'> <br><br>
        <input type='submit' name='Consultar' value='Consultar'>
@@ -15,32 +15,24 @@ error_reporting(0)
        <br>
 
 <?php
-// funcion
-    function filtrardb($usuario, $basedatos){
-    $idConexion = mysqli_connect( "localhost", $usuario , "" );
+if (isset($_POST["Consultar"])) 
+{
+    $nombre = $_POST["nombre"];
+
+    $idConexion = mysqli_connect( "localhost", "root" , "" );
     if (!$idConexion) 
     {
          die('No se puede conectar' );
     }
 
-    $seleccionada = mysqli_select_db($idConexion,$basedatos);
+    $seleccionada = mysqli_select_db($idConexion,"login");
     if (!$seleccionada) 
     {
         die ("No se puede usar la base de datos: ". mysqli_error($idConexion)); 
     }
-}
-
-// Lamar a la función
-filtrardb("root","login");
-
-
-if (isset($_POST["Consultar"])) 
-{
-    $nombre = $_POST["nombre"];
-
     
     
-    $consulta = "SELECT nombre, apellido1, apellido2, fechanacimiento, email FROM usuarios WHERE nombre LIKE '$nombre%";
+    $consulta = "SELECT nombre, apellido1, apellido2, fechanacimiento, email FROM usuarios WHERE nombre LIKE '$nombre%'";
     $resultado = mysqli_query($idConexion, $consulta);
 
     if (mysqli_num_rows($resultado) > 0) 
@@ -50,9 +42,23 @@ if (isset($_POST["Consultar"]))
     $apellido1 = $row["apellido1"];
     $apellido2 = $row["apellido2"];
     $fechanacimiento = $row["fechanacimiento"];
+    $email = $row["email"];
 
-    echo "<table>
-    
+    echo "<table align='center' border=1px>
+    <tr>
+    <th>nombre</th>
+    <th>apellido1</th>
+    <th>apellido2</th>
+    <th>fechanacimiento</th>
+    <th>email</th>
+    </tr>
+    <tr>
+    <td>$nombre</td>
+    <td>$apellido1</td>
+    <td>$apellido2</td>
+    <td>$fechanacimiento</td>
+    <td>$email</td>
+    </tr>
     </table>";
     } else 
     {
