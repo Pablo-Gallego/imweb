@@ -6,6 +6,7 @@
 <?php
 require("funciones2.php");
 if (isset($_POST['Enviar'])) {
+    
 
     mysqli_free_result($resultado);
     mysqli_close($idConexion);
